@@ -1,5 +1,6 @@
 #define INF 1000000007
 #include <cstdio>
+#include <windows.h>
 
 class ArrayList {
 	int* data;
@@ -15,6 +16,14 @@ class ArrayList {
 		data = newData;
 	}
 	
+	bool isValidIndex(int index) {
+		return 0 <= index && index < length;
+	}
+	
+	bool isValidIndexPlusOne(int index) {
+		return 0 <= index && index <= length;
+	}
+	
 	public: 
 		ArrayList() {
 			data = new int[INITIAL_CAPACITY];
@@ -28,14 +37,6 @@ class ArrayList {
 		
 		int getCapacity() {
 			return capacity;
-		}
-		
-		bool isValidIndex(int index) {
-			return 0 <= index && index < length;
-		}
-		
-		bool isValidIndexPlusOne(int index) {
-			return 0 <= index && index <= length;
 		}
 		
 		bool isFull() {
@@ -68,7 +69,7 @@ class ArrayList {
 			length++;
 		}
 		
-		bool removeItem(int index) {
+		bool removeItemAtIndex(int index) {
 			if (!isValidIndex(index)) return false;
 			for (int i = index; i < length-1; i++)
 				data[i] = data[i+1];
@@ -76,11 +77,7 @@ class ArrayList {
 			return true;
 		}
 		
-		void deleteList() {
-			delete[] data;
-		}
-		
-		void clearList() {
+		void clear() {
 			delete[] data;
 			data = new int[INITIAL_CAPACITY];
 			length = 0;
@@ -95,18 +92,113 @@ class ArrayList {
 		
 		void display() {
 			printf("Display:\n");
-			for (int i = 0; i < length; i++) {
-				if (i > 0) printf(", ");
-				printf("%d", data[i]);
+			if (length == 0) {
+				printf("<empty>\n");
+			} else {
+				for (int i = 0; i < length; i++) {
+					if (i > 0) printf(", ");
+					printf("%d", data[i]);
+				}
 			}
 			printf("\n");
 		}
 };
 
 int main() {
-	printf("Array List\n");
-	while (true) {
+	ArrayList list;
+	int choice = -1;
+	while (choice != 0) {
+		system("cls");
+		printf("Array List\n");
+		printf("----------\n");
+		list.display();
+		printf("\n");
+		printf("1. Add Item\n");
+		printf("2. Get Length\n");
+		printf("3. Get Capacity\n");
+		printf("4. Is Full\n");
+		printf("5. Set Item\n");
+		printf("6. Get Item\n");
+		printf("7. Insert Item\n");
+		printf("8. Remove Item\n");
+		printf("9. Find Item Index\n");
+		printf("10. Clear\n");
+		printf("0. Exit\n");
+		printf("\n");
+		printf("Choice: ");
+		scanf("%d", &choice);
 		
+		int item, index;
+		switch (choice) {
+			case 1:
+				printf("--> Add Item\n");
+				printf("Item: ");
+				scanf("%d", &item);
+				list.addItem(item);
+				break;
+			case 2:
+				printf("--> Get Length\n");
+				printf("Length: %d\n", list.getLength());
+				system("pause");
+				break;
+			case 3:
+				printf("--> Get Capacity\n");
+				printf("Length: %d\n", list.getCapacity());
+				system("pause");
+				break;
+			case 4:
+				printf("--> Is Full?\n");
+				printf("%s\n", list.isFull() ? "Full" : "Not full.");
+				system("pause");
+				break;
+			case 5:
+				printf("--> Set Item\n");
+				printf("Index: ");
+				scanf("%d", &index);
+				printf("Item: ");
+				scanf("%d", &item);
+				list.setItem(index, item);
+				break;
+			case 6:
+				printf("--> Get Item\n");
+				printf("Index: ");
+				scanf("%d", &index);
+				printf("Item at index %d: %d\n", index, list.getItem(index));
+				system("pause");
+				break;
+			case 7:
+				printf("--> Insert Item\n");
+				printf("Index: ");
+				scanf("%d", &index);
+				printf("Item: ");
+				scanf("%d", &item);
+				list.insertItem(index, item);
+				break;
+			case 8:
+				printf("--> Remove Item\n");
+				printf("Index: ");
+				scanf("%d", &index);
+				list.removeItemAtIndex(index);
+				break;
+			case 9:
+				printf("--> Find Item Index\n");
+				printf("Item: ");
+				scanf("%d", &item);
+				printf("Found %d at index %d\n", item, list.findItemIndex(item));
+				system("pause");
+				break;
+			case 10:
+				printf("--> Clear\n");
+				list.clear();
+				break;
+			case 0:
+				printf("Exiting..\n");
+				break;
+			default:
+				printf("Invalid choice!");
+				system("pause");
+				break;
+		}
 	}
 	return 0;
 }

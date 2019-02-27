@@ -1,93 +1,95 @@
-#include <stdio.h>
-#include <time.h>
-#include <stdlib.h>
+#define INF 1000000007
+#include <cstdio>
+#include <windows.h>
 
-typedef struct aNode {
+struct Node {
 	int data;
-	aNode *next;
-} Node;
+	Node *next;
+};
 
-typedef struct aList {
+class LinkedList {
 	Node *head;
 	Node *tail;
-	int count;
-} LinkedList;
-
-LinkedList* NewLinkedList() {
-	LinkedList *list = new LinkedList;
-	list->head = NULL;
-	list->tail = NULL;
-	list->count = 0;
-}
-
-void AddItem(LinkedList *list, int item) {
-	Node *newNode = new Node;
-	newNode->data = item;
-	newNode->next = NULL;
-	if (list->head == NULL) {
-		list->head = newNode;
-		list->tail = newNode;
-	}
-	else {
-		list->tail->next = newNode;
-		list->tail = newNode;		
-	}
-	list->count++;
-}
-
-void DisplayData(LinkedList *list) {
-	printf("List Item :\n");
-	Node *ptr = list->head;
-	while (ptr != NULL) {
-		printf("%5i ", ptr->data);
-		ptr = ptr->next;
-	}
-	printf("\n");
-}
-
-int Count(LinkedList *list) {
-	if (list != NULL) 
-		return list->count;
-	return 0;
-}
-
-bool FindItem(LinkedList *list, int item) {
-	if (list != NULL && list->head != NULL) {
-		Node *ptr = list->head;
-		while (ptr != NULL) {
-			if (ptr->data == item) return true;
-			ptr = ptr->next;
+	int length;
+	
+	public:
+		LinkedList() {
+			head = NULL;
+			tail = NULL;
+			length = 0;
 		}
-	}
-	return false;
-}
-
-void InsertItem(LinkedList *list, int index, int item) {
-	if (Count(list) > 0 && index >= 0 && index <= Count(list)) { // index valid ?
-		if (index == 0) { // sisip depan
+		
+		void addItem(int item) {
 			Node *newNode = new Node;
 			newNode->data = item;
-			newNode->next = list->head;
-			list->head = newNode;
-			list->count++;
-		}
-		else if (index == Count(list)) // sisip belakang
-			AddItem(list, item);	
-		else { // sisip tengah
-			Node *ptr = list->head;
-			int idx = 0;
-			while (idx < index-1) {
-				ptr = ptr->next;
-				idx++;
+			newNode->next = NULL;
+			if (head == NULL) {
+				head = newNode;
+				tail = newNode;
+			} else {
+				tail->next = newNode;
+				tail = newNode;
 			}
-			Node *newNode = new Node;
-			newNode->data = item;
-			newNode->next = ptr->next;
-			ptr->next = newNode;
-			list->count++;
+			length++;
 		}
-	}
-}
+		
+		void display() {
+			printf("Display:\n");
+			Node* ptr = head;
+			for (int i = 0; i < length; i++) {
+				if (i > 0) printf(", ");
+				printf("%d", ptr->data);	
+				ptr = ptr->next;
+			}
+			while (ptr != NULL) {
+				printf("%5i ", ptr->data);
+				ptr = ptr->next;
+			}
+			printf("\n");
+		}
+		
+		int getLength() {
+			return length;
+		}
+		
+		bool findItem(int item) {
+			if (list != NULL && list->head != NULL) {
+				Node *ptr = list->head;
+				while (ptr != NULL) {
+					if (ptr->data == item) return true;
+					ptr = ptr->next;
+				}
+			}
+			return false;
+		}
+		
+		void insertItem(LinkedList *list, int index, int item) {
+			if (Count(list) > 0 && index >= 0 && index <= Count(list)) { // index valid ?
+				if (index == 0) { // sisip depan
+					Node *newNode = new Node;
+					newNode->data = item;
+					newNode->next = list->head;
+					list->head = newNode;
+					list->count++;
+				}
+				else if (index == Count(list)) // sisip belakang
+					AddItem(list, item);	
+				else { // sisip tengah
+					Node *ptr = list->head;
+					int idx = 0;
+					while (idx < index-1) {
+						ptr = ptr->next;
+						idx++;
+					}
+					Node *newNode = new Node;
+					newNode->data = item;
+					newNode->next = ptr->next;
+					ptr->next = newNode;
+					list->count++;
+				}
+			}
+		}
+};
 
 int main() {
 	LinkedList *list = NULL;

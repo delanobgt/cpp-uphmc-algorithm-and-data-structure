@@ -35,10 +35,6 @@ class ArrayList {
 			return length;
 		}
 		
-		int getCapacity() {
-			return capacity;
-		}
-		
 		bool isFull() {
 			return length == capacity;
 		}
@@ -115,14 +111,13 @@ int main() {
 		printf("\n");
 		printf("1. Add Item\n");
 		printf("2. Get Length\n");
-		printf("3. Get Capacity\n");
-		printf("4. Is Full\n");
-		printf("5. Set Item\n");
-		printf("6. Get Item\n");
-		printf("7. Insert Item\n");
-		printf("8. Remove Item\n");
-		printf("9. Find Item Index\n");
-		printf("10. Clear\n");
+		printf("3. Set Item\n");
+		printf("4. Get Item\n");
+		printf("5. Insert Item\n");
+		printf("6. Remove Item By Index\n");
+		printf("7. Remove All Items By Value\n");
+		printf("8. Find Item Index\n");
+		printf("9. Clear\n");
 		printf("0. Exit\n");
 		printf("\n");
 		printf("Choice: ");

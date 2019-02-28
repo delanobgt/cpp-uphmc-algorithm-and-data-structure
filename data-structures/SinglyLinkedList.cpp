@@ -38,11 +38,7 @@ class LinkedList {
 			Node* ptr = head;
 			for (int i = 0; i < length; i++) {
 				if (i > 0) printf(", ");
-				printf("%d", ptr->data);	
-				ptr = ptr->next;
-			}
-			while (ptr != NULL) {
-				printf("%5i ", ptr->data);
+				printf("%d", ptr->data);
 				ptr = ptr->next;
 			}
 			printf("\n");
@@ -53,12 +49,11 @@ class LinkedList {
 		}
 		
 		bool findItem(int item) {
-			if (list != NULL && list->head != NULL) {
-				Node *ptr = list->head;
-				while (ptr != NULL) {
-					if (ptr->data == item) return true;
-					ptr = ptr->next;
-				}
+			if (head == NULL) throw "List is empty";
+			Node *ptr = list->head;
+			while (ptr != NULL) {
+				if (ptr->data == item) return true;
+				ptr = ptr->next;
 			}
 			return false;
 		}

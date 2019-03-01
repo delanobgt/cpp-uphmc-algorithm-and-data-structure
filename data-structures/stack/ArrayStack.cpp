@@ -3,97 +3,110 @@
 
 const int MAX = 100;
 
-typedef struct List {
+class ArrayStack {
+	int* data;
+	int length;
+	int capacity;
+	static const int INITIAL_CAPACITY = 8;
 	
-	int *data;
-	int count;
-	
-	void CreateNewStack() {
-		
+	void growList() {
+		capacity = capacity * 2;
+		int* newData = new int[capacity];
+		for (int i = 0; i < length; i++) newData[i] = data[i];
+		delete[] data;
+		data = newData;
 	}
 	
-	int Count() {
-		
+	bool isFull() {
+		return length == capacity;
 	}
 	
-	bool IsFull() {
-		
-	}
+	public:
+		ArrayStack() {
+			data = new int[INITIAL_CAPACITY];
+			length = 0;
+			capacity = INITIAL_CAPACITY;
+		}
 	
-	bool IsEmpty() {
+		bool isEmpty() {
+			return length == 0;	
+		}
 		
-	}
-	
-	void Push(int item) {
+		int getLength() {
+			return length;
+		}
 		
-	}
-	
-	int Pop() {
+		void push(int item) {
+			
+		}
 		
-	}
-	
-	int Peek() {
+		int pop() {
+			
+		}
 		
-	}
-	
-	void Display() {
+		int peek() {
+			
+		}
 		
-	}
-	
-	void Clear() {
+		void display() {
+			
+		}
 		
-	}
-	
-	void Dispose() {
-		
-	}
-	
-} Stack;
+		void clear() {
+			
+		}
+};
 
 int main() {
-	
-	Stack *s = new Stack;
-	
-	int pil;
-	
-	do {
+	ArrayStack stack;
+	int choice = -1;
+	while (choice != 0) {
 		system("cls");
-		printf("M  E  N  U [Stack dengan Array]\n");
-		printf("===============================\n");
-		printf("1. IsFull\n");
-		printf("2. IsEmpty\n");
-		printf("3. Count\n");
-		printf("4. Push\n");
-		printf("5. Pop\n");
-		printf("6. Peek\n");
-		printf("7. Display\n");
-		printf("8. Clear\n");
-		printf("0. Exit Program\n");
-		printf("===============================\n");
-		printf("? ");
-		scanf("%d", &pil);
-		switch (pil) {
+		printf("Array List\n");
+		printf("----------\n");
+		stack.display();
+		printf("\n");
+		printf("1. Push\n");
+		printf("2. Pop\n");
+		printf("3. Get Length\n");
+		printf("4. Clear\n");
+		printf("0. Exit\n");
+		printf("\n");
+		printf("Choice: ");
+		scanf("%d", &choice);
+		
+		int item, index;
+		switch (choice) {
 			case 1:
+				printf("--> Push\n");
+				printf("Item: ");
+				scanf("%d", &item);
+				stack.push(item);
+				break;
 			case 2:
-			case 3:
-			case 4:
-			case 5:
-			case 6:
-			case 7:
-			case 8:
-				system("cls");
-				printf("your choice : 1 - 8\n");
+				printf("--> Pop\n");
+				int popped = stack.pop();
+				printf("Popped: %d\n", popped);
 				system("pause");
 				break;
+			case 3:
+				printf("--> Get Length\n");
+				printf("Length: %d\n", stack.getLength());
+				system("pause");
+				break;
+			case 4:
+				printf("--> Clear\n");
+				stack.clear();
+				break;
 			case 0:
-				system("cls");
-				printf("bye bye\n");
+				printf("Exiting..\n");
+				break;
+			default:
+				printf("Invalid choice!");
 				system("pause");
 				break;
 		}
-	} while (pil != 0);
-	
-	s->Dispose();
-	
+	}
 	return 0;
 }
+

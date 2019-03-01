@@ -9,7 +9,7 @@ class ArrayList {
 	
 	void growList() {
 		capacity = capacity * 2;
-		int *newData = new int[capacity];
+		int* newData = new int[capacity];
 		for (int i = 0; i < length; i++) newData[i] = data[i];
 		delete[] data;
 		data = newData;

@@ -116,6 +116,7 @@ class LinkedList {
 				Node* newNeighbor = ptr->next->next;
 				delete ptr->next;
 				ptr->next = newNeighbor;
+				
 				if (newNeighbor == NULL) {
 					tail = ptr;
 				}
@@ -133,6 +134,7 @@ class LinkedList {
 				if (ptr->next->data == value) {
 					if (ptr->next == head) head = ptr->next->next;
 					else if (ptr->next == tail) tail = ptr;
+					
 					Node* newNeighbor = ptr->next->next;
 					delete ptr->next;
 					ptr->next = newNeighbor;

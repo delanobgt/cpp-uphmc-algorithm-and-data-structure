@@ -103,6 +103,7 @@ class LinkedList {
 		bool removeItemAtIndex(int index) {
 			if (!isValidIndex(index)) throw "Invalid index!";
 			if (length == 1) {
+				delete head;
 				head = NULL;
 				tail = NULL;
 			} else if (index == 0) {
@@ -166,7 +167,6 @@ class LinkedList {
 		}
 		
 		void display() {
-			printf("Display:\n");
 			if (length == 0) {
 				printf("<empty>\n");
 			} else {
@@ -186,8 +186,8 @@ int main() {
 	int choice = -1;
 	while (choice != 0) {
 		system("cls");
-		printf("Linked List\n");
-		printf("----------\n");
+		printf("Singly Linked List\n");
+		printf("------------------\n");
 		list.display();
 		printf("\n");
 		printf("1. Add Item\n");

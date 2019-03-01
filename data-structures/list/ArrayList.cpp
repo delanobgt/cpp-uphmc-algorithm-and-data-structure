@@ -104,7 +104,6 @@ class ArrayList {
 		}
 		
 		void display() {
-			printf("Display:\n");
 			if (length == 0) {
 				printf("<empty>\n");
 			} else {

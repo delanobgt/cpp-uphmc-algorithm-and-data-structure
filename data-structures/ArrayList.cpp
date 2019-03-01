@@ -80,19 +80,19 @@ class ArrayList {
 		
 		bool removeItemsByValue(int value) {
 			int a = 0, b = 0;
-			int removeCnt = 0;
-			while (b < length) {
+			while (a < length && b < length) {
 				if (data[a] != value) {
+					a++;
+				} else if (b < a || data[b] == value) {
+					b++;
+				} else  {
+					int tmp = data[a];
+					data[a] = data[b];
+					data[b] = tmp;
 					a++; b++;
-				} else {
-					if (data[b] == value) b++;
-					else {
-						int tmp = data[a];
-						data[a] = data[b];
-						data[b] = tmp;
-					}
 				}
 			}
+			length = a;
 			return true;
 		}
 		
@@ -180,7 +180,7 @@ int main() {
 				printf("--> Find Item Index\n");
 				printf("Item: ");
 				scanf("%d", &item);
-				int index = list.findItemIndex(item);
+				index = list.findItemIndex(item);
 				if (index != -1) {
 					printf("Found %d at index %d\n", item, list.findItemIndex(item));	
 				} else {
@@ -196,7 +196,7 @@ int main() {
 				break;
 			case 8:
 				printf("--> Remove All Items By Value\n");
-				printf("Index: ");
+				printf("Item: ");
 				scanf("%d", &index);
 				list.removeItemsByValue(index);
 				break;

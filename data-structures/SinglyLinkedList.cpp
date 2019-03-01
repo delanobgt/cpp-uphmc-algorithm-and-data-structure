@@ -6,13 +6,13 @@ struct Node {
 	Node* next;
 	
 	Node(int data) {
-		this.data = data;
-		this.next = NULL;
+		this->data = data;
+		this->next = NULL;
 	}
 	
 	Node(int data, Node* next) {
-		this.data = data;
-		this.next = next;
+		this->data = data;
+		this->next = next;
 	}
 };
 
@@ -50,7 +50,7 @@ class LinkedList {
 		}
 		
 		bool insertItem(int index, int item) {
-			if (!isValidIndex(index)) throw "Invalid index!";
+			if (!isValidIndexPlusOne(index)) throw "Invalid index!";
 			Node* newNode = new Node(item);
 			if (index == 0) {
 				newNode->next = head;
@@ -60,9 +60,10 @@ class LinkedList {
 			} else {
 				Node* ptr = head;
 				for (int i = 1; i < index; i++) {
-					newNode->next = ptr->next;
-					ptr->next = newNode;
+					ptr = ptr->next;
 				}
+				newNode->next = ptr->next;
+				ptr->next = newNode;
 			}
 			length++;
 		}
@@ -101,27 +102,52 @@ class LinkedList {
 		
 		bool removeItemAtIndex(int index) {
 			if (!isValidIndex(index)) throw "Invalid index!";
-			for (int i = index; i < length-1; i++)
-				data[i] = data[i+1];
+			if (length == 1) {
+				head = NULL;
+				tail = NULL;
+			} else if (index == 0) {
+				Node* newHead = head->next;
+				delete head;
+				head = newHead;
+			} else {
+				Node* ptr = head;
+				for (int i = 1; i < index; i++) ptr = ptr->next;
+				
+				Node* newNeighbor = ptr->next->next;
+				delete ptr->next;
+				ptr->next = newNeighbor;
+				if (newNeighbor == NULL) {
+					tail = ptr;
+				}
+			}
 			length--;
 			return true;
 		}
 		
 		bool removeItemsByValue(int value) {
-			int a = 0, b = 0;
-			while (a < length && b < length) {
-				if (data[a] != value) {
-					a++;
-				} else if (b < a || data[b] == value) {
-					b++;
-				} else  {
-					int tmp = data[a];
-					data[a] = data[b];
-					data[b] = tmp;
-					a++; b++;
+			if (head == NULL) return true;
+			
+			Node* pseudoNode = new Node(-1, head);
+			Node* ptr = pseudoNode;
+			while (ptr->next != NULL) {
+				if (ptr->next->data == value) {
+					if (ptr->next == head) head = ptr->next->next;
+					else if (ptr->next == tail) tail = ptr;
+					Node* newNeighbor = ptr->next->next;
+					delete ptr->next;
+					ptr->next = newNeighbor;
+					length--;
+				} else {
+					ptr = ptr->next;
 				}
 			}
-			length = a;
+			delete pseudoNode;
+			
+			if (length == 0) {
+				head = NULL; 
+				tail = NULL;
+			}
+			
 			return true;
 		}
 		

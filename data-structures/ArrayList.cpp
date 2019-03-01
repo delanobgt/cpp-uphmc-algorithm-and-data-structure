@@ -41,7 +41,7 @@ class ArrayList {
 		}
 		
 		bool insertItem(int index, int item) {
-			if (!isValidIndex(index)) throw "Invalid index!";
+			if (!isValidIndexPlusOne(index)) throw "Invalid index!";
 			if (isFull()) growList();
 			for (int i = length; i > index; i--) 
 				data[i] = data[i-1];

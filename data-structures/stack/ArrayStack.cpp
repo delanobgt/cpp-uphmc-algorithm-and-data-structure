@@ -37,23 +37,35 @@ class ArrayStack {
 		}
 		
 		void push(int item) {
-			
+			if (isFull()) growList();
+			data[length++] = item;
 		}
 		
 		int pop() {
-			
+			return data[--length];
 		}
 		
 		int peek() {
-			
+			return data[length-1];
 		}
 		
 		void display() {
-			
+			if (length == 0) {
+				printf("<empty>\n");
+			} else {
+				printf("[TOP]\n");
+				for (int i = length-1; i >= 0; i--) {
+					printf("%d\n", data[i]);
+				}
+				printf("[BOTTOM]\n");
+			}
 		}
 		
 		void clear() {
-			
+			delete[] data;
+			data = new int[INITIAL_CAPACITY];
+			length = 0;
+			capacity = INITIAL_CAPACITY;
 		}
 };
 
@@ -62,8 +74,8 @@ int main() {
 	int choice = -1;
 	while (choice != 0) {
 		system("cls");
-		printf("Array List\n");
-		printf("----------\n");
+		printf("Array Stack\n");
+		printf("-----------\n");
 		stack.display();
 		printf("\n");
 		printf("1. Push\n");
@@ -85,8 +97,8 @@ int main() {
 				break;
 			case 2:
 				printf("--> Pop\n");
-				int popped = stack.pop();
-				printf("Popped: %d\n", popped);
+				item = stack.pop();
+				printf("Popped: %d\n", item);
 				system("pause");
 				break;
 			case 3:

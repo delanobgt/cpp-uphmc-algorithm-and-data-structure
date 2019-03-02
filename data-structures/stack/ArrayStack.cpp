@@ -1,7 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-
-const int MAX = 100;
+#include <cstdio>
+#include <windows.h>
 
 class ArrayStack {
 	int* data;

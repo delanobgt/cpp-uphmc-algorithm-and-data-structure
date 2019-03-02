@@ -1,73 +1,97 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <windows.h>
 
-const int MAX = 100;
+struct Node {
+	int data;
+	Node* prev;
+	
+	Node(int data) {
+		this->data = data;
+		this->prev = NULL;
+	}
+	
+	Node(int data, Node* prev) {
+		this->data = data;
+		this->prev = prev;
+	}
+};
 
-typedef struct List {
+class LinkedStack {
+	Node* top;
+	int length;
 	
-	int *data;
-	int count;
+	public:
+		LinkedStack() {
+			top = NULL;
+			length = 0;
+		}
 	
-	void CreateNewStack() {
+		bool isEmpty() {
+			return length == 0;	
+		}
 		
-	}
-	
-	int Count() {
+		int getLength() {
+			return length;
+		}
 		
-	}
-	
-	bool IsFull() {
+		void push(int item) {
+			Node* newNode = new Node(item, top);
+			top = newNode;
+			length++;
+		}
 		
-	}
-	
-	bool IsEmpty() {
+		int pop() {
+			int value = top->data;
+			Node* newTop = top->prev;
+			delete top;
+			top = newTop;
+			length--;
+			return value;
+		}
 		
-	}
-	
-	void Push(int item) {
+		int peek() {
+			return top->data;
+		}
 		
-	}
-	
-	int Pop() {
+		void display() {
+			if (length == 0) {
+				printf("<empty>\n");
+			} else {
+				printf("[TOP]\n");
+				Node* ptr = top;
+				while (ptr != NULL) {
+					printf("%d\n", ptr->data);
+					ptr = ptr->prev;
+				}
+				printf("[BOTTOM]\n");
+			}
+		}
 		
-	}
-	
-	int Peek() {
-		
-	}
-	
-	void Display() {
-		
-	}
-	
-	void Clear() {
-		
-	}
-	
-	void Dispose() {
-		
-	}
-	
-} Stack;
+		void clear() {
+			Node* ptr = top;
+			while (ptr != NULL) {
+				Node* nextPtr = ptr->prev;
+				delete ptr;
+				ptr = nextPtr;
+			}
+			top = NULL;
+			length = 0;
+		}
+};
 
 int main() {
-	ArrayList list;
+	LinkedStack stack;
 	int choice = -1;
 	while (choice != 0) {
 		system("cls");
-		printf("Array List\n");
-		printf("----------\n");
-		list.display();
+		printf("Linked Stack\n");
+		printf("------------\n");
+		stack.display();
 		printf("\n");
-		printf("1. Add Item\n");
-		printf("2. Insert Item\n");
-		printf("3. Set Item\n");
-		printf("4. Get Item\n");
-		printf("5. Get Length\n");
-		printf("6. Find Item Index\n");
-		printf("7. Remove Item At Index\n");
-		printf("8. Remove All Items By Value\n");
-		printf("9. Clear\n");
+		printf("1. Push\n");
+		printf("2. Pop\n");
+		printf("3. Get Length\n");
+		printf("4. Clear\n");
 		printf("0. Exit\n");
 		printf("\n");
 		printf("Choice: ");
@@ -76,66 +100,25 @@ int main() {
 		int item, index;
 		switch (choice) {
 			case 1:
-				printf("--> Add Item\n");
+				printf("--> Push\n");
 				printf("Item: ");
 				scanf("%d", &item);
-				list.addItem(item);
+				stack.push(item);
 				break;
 			case 2:
-				printf("--> Insert Item\n");
-				printf("Index: ");
-				scanf("%d", &index);
-				printf("Item: ");
-				scanf("%d", &item);
-				list.insertItem(index, item);
+				printf("--> Pop\n");
+				item = stack.pop();
+				printf("Popped: %d\n", item);
+				system("pause");
 				break;
 			case 3:
-				printf("--> Set Item\n");
-				printf("Index: ");
-				scanf("%d", &index);
-				printf("Item: ");
-				scanf("%d", &item);
-				list.setItem(index, item);
+				printf("--> Get Length\n");
+				printf("Length: %d\n", stack.getLength());
+				system("pause");
 				break;
 			case 4:
-				printf("--> Get Item\n");
-				printf("Index: ");
-				scanf("%d", &index);
-				printf("Item at index %d: %d\n", index, list.getItem(index));
-				system("pause");
-				break;
-			case 5:
-				printf("--> Get Length\n");
-				printf("Length: %d\n", list.getLength());
-				system("pause");
-				break;
-			case 6:
-				printf("--> Find Item Index\n");
-				printf("Item: ");
-				scanf("%d", &item);
-				index = list.findItemIndex(item);
-				if (index != -1) {
-					printf("Found %d at index %d\n", item, list.findItemIndex(item));	
-				} else {
-					printf("Item not found!");
-				}
-				system("pause");
-				break;
-			case 7:
-				printf("--> Remove Item At Index\n");
-				printf("Index: ");
-				scanf("%d", &index);
-				list.removeItemAtIndex(index);
-				break;
-			case 8:
-				printf("--> Remove All Items By Value\n");
-				printf("Item: ");
-				scanf("%d", &index);
-				list.removeItemsByValue(index);
-				break;
-			case 9:
 				printf("--> Clear\n");
-				list.clear();
+				stack.clear();
 				break;
 			case 0:
 				printf("Exiting..\n");
@@ -148,3 +131,4 @@ int main() {
 	}
 	return 0;
 }
+
